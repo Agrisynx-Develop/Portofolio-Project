@@ -579,26 +579,32 @@ export default function App() {
           </div>
 
           <div className="card-gradient p-8 rounded-3xl relative overflow-hidden">
-            <form onSubmit={handleContactSubmit} className="space-y-6 relative z-10">
+            <form 
+              name="contact"
+              method="POST"
+              data-netlify="true"
+              className="space-y-6 relative z-10"
+            >
+              <input type="hidden" name="form-name" value="contact" />
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 <div>
                   <label className="block text-sm font-semibold text-gray-400 mb-2">Nama Lengkap</label>
-                  <input 
+                  <input
+                    name="name"
                     required
-                    type="text" 
-                    value={formData.name}
-                    onChange={(e) => setFormData({...formData, name: e.target.value})}
+                    type="text"
                     placeholder="Contoh: John Doe"
                     className="w-full px-4 py-3 bg-dark-bg border border-border-subtle rounded-xl text-white focus:outline-none focus:border-accent-cyan transition-all placeholder:text-gray-700"
+         
+                
                   />
                 </div>
                 <div>
                   <label className="block text-sm font-semibold text-gray-400 mb-2">Email</label>
-                  <input 
+                  <input
+                    name="email"
                     required
-                    type="email" 
-                    value={formData.email}
-                    onChange={(e) => setFormData({...formData, email: e.target.value})}
+                    type="email"
                     placeholder="johndoe@email.com"
                     className="w-full px-4 py-3 bg-dark-bg border border-border-subtle rounded-xl text-white focus:outline-none focus:border-accent-cyan transition-all placeholder:text-gray-700"
                   />
@@ -606,24 +612,23 @@ export default function App() {
               </div>
               <div>
                 <label className="block text-sm font-semibold text-gray-400 mb-2">Subjek</label>
-                <input 
+                <input
+                  name="subject"
                   required
-                  type="text" 
-                  value={formData.subject}
-                  onChange={(e) => setFormData({...formData, subject: e.target.value})}
+                  type="text"
                   placeholder="Butuh bantuan untuk..."
                   className="w-full px-4 py-3 bg-dark-bg border border-border-subtle rounded-xl text-white focus:outline-none focus:border-accent-cyan transition-all placeholder:text-gray-700"
+         
                 />
               </div>
               <div>
                 <label className="block text-sm font-semibold text-gray-400 mb-2">Pesan</label>
-                <textarea 
-                  required
+                <textarea
+                  name="message"
                   rows={4}
-                  value={formData.message}
-                  onChange={(e) => setFormData({...formData, message: e.target.value})}
                   placeholder="Tuliskan pesan Anda di sini..."
-                  className="w-full px-4 py-3 bg-dark-bg border border-border-subtle rounded-xl text-white focus:outline-none focus:border-accent-cyan transition-all placeholder:text-gray-700 resize-none"
+                  className="w-full px-4 py-3 ..."className="w-full px-4 py-3 bg-dark-bg border border-border-subtle rounded-xl text-white focus:outline-none focus:border-accent-cyan transition-all placeholder:text-gray-700 resize-none"
+                  required
                 />
               </div>
               <button type="submit" className="btn-primary w-full flex items-center justify-center gap-2">
