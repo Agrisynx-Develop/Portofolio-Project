@@ -501,7 +501,7 @@ export default function App() {
 
       {/* --- PENDIDIKAN & PENGALAMAN --- */}
       <div className="grid grid-cols-1 lg:grid-cols-2 max-w-7xl mx-auto">
-        <Section id="pendidikan" title="Pendidikan">
+        <Section id="education" title="Education">
           <div className="space-y-8 relative before:absolute before:left-4 before:top-2 before:bottom-2 before:w-px before:bg-border-subtle">
             {EDUCATION.map((item) => (
               <div key={item.id} className="relative pl-12">
@@ -517,7 +517,7 @@ export default function App() {
           </div>
         </Section>
 
-        <Section id="pengalaman" title="Pengalaman Kerja">
+        <Section id="experience" title="Work,Course & Organizational Experience">
           <div className="space-y-8">
             {EXPERIENCE.map((item) => (
               <div key={item.id} className="card-gradient p-6 rounded-2xl group transition-all hover:border-accent-cyan/30">
@@ -545,7 +545,7 @@ export default function App() {
       </div>
 
       {/* --- CONTACT --- */}
-      <Section id="kontak" title="Mari Berdiskusi">
+      <Section id="contact" title="Let's Discuss">
         <div className="max-w-3xl mx-auto text-center">
           <h3 className="text-2xl font-bold text-white mb-6">
             Punya ide proyek menarik?
