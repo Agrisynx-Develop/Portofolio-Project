@@ -554,6 +554,11 @@ export default function App() {
               </div>
             </div>
           </div>
+        </div>
+      </Section>
+
+      {/* --- FOOTER --- */}
+      <footer>
 
       {/* --- FOOTER --- */}
       <footer className="border-t border-border-subtle py-12 px-6">
