@@ -137,10 +137,10 @@ const EXPERIENCE = [
 const EDUCATION = [
   {
     id: 1,
-    degree: "S1 Ilmu dan Industri Peternakan",
-    institution: "Universitas Gadjah Mada",
+    degree: "S1 Animal Science Industry",
+    institution: "Gadjah Mada University",
     year: "2022 - 2026",
-    highlight: "Lulus dengan IPK 3.41"
+    highlight: "GPA 3.41"
   },
   {
     id: 2,
@@ -354,7 +354,7 @@ export default function App() {
       </section>
 
       {/* --- TENTANG --- */}
-      <Section id="tentang" title="Tentang Saya">
+      <Section id="about" title="About Me">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
 
           {/* FOTO */}
@@ -419,7 +419,7 @@ export default function App() {
       </Section>
 
       {/* --- PORTFOLIO --- */}
-      <Section id="portofolio" title="Proyek Unggulan">
+      <Section id="portofolio" title="Project">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-12">
           {/* Filters */}
           <div className="flex flex-wrap gap-2">
@@ -548,12 +548,13 @@ export default function App() {
       <Section id="contact" title="Let's Discuss">
         <div className="max-w-3xl mx-auto text-center">
           <h3 className="text-2xl font-bold text-white mb-6">
-            Punya ide proyek menarik?
+            Do you have any interesting project ideas?
           </h3>
       
           <p className="text-gray-400 mb-10 leading-relaxed">
-            Saya selalu terbuka untuk kolaborasi baru atau sekadar diskusi teknologi. 
-            Silakan hubungi saya melalui email atau platform berikut.
+            I am always open to new collaborations or tech discussions. 
+            Please feel free to reach out via email or the platforms below.
+         
           </p>
       
           <div className="space-y-6">
@@ -566,7 +567,7 @@ export default function App() {
               </div>
               <div>
                 <p className="text-xs font-bold text-gray-500 uppercase tracking-widest">
-                  Email Saya
+                  My Email
                 </p>
                 <p className="text-lg font-semibold text-white">
                   teguhguntoro28@gmail.com
