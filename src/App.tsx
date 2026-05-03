@@ -219,7 +219,30 @@ export default function App() {
       return matchesFilter && matchesSearch;
     });
   }, [filter, search]);
-  
+
+  const handleContactSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!formData.email.includes('@')) {
+      alert('Pesan: Email tidak valid');
+      return;
+    }
+    
+    const newMessage = { ...formData, id: Date.now(), date: new Date().toLocaleDateString() };
+    const updatedMessages = [newMessage, ...messages];
+    setMessages(updatedMessages);
+    localStorage.setItem('portfolio_messages', JSON.stringify(updatedMessages));
+    
+    setFormStatus('success');
+    setFormData({ name: '', email: '', subject: '', message: '' });
+    setTimeout(() => setFormStatus(null), 3000);
+  };
+
+  const deleteMessage = (id: number) => {
+    const updated = messages.filter(m => m.id !== id);
+    setMessages(updated);
+    localStorage.setItem('portfolio_messages', JSON.stringify(updated));
+  };
+
   const navLinks = [
     { name: 'Beranda', id: 'home' },
     { name: 'Tentang', id: 'tentang' },
@@ -523,38 +546,53 @@ export default function App() {
 
       {/* --- CONTACT --- */}
       <Section id="kontak" title="Mari Berdiskusi">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
-          <div>
-            <h3 className="text-2xl font-bold text-white mb-6">Punya ide proyek menarik?</h3>
-            <p className="text-gray-400 mb-10 leading-relaxed">
-              Saya selalu terbuka untuk kolaborasi baru atau sekadar diskusi teknologi. 
-              Gunakan formulir ini atau langsung hubungi saya melalui platform favorit Anda.
-            </p>
-
-            <div className="space-y-6">
-              <a href="mailto:teguhguntoro28@gmail.com" className="flex items-center gap-4 p-4 rounded-2xl bg-dark-surface border border-border-subtle hover:border-accent-cyan transition-all group">
-                <div className="p-3 bg-accent-cyan/10 rounded-xl text-accent-cyan group-hover:bg-accent-cyan group-hover:text-dark-bg transition-all">
-                  <Mail size={24} />
-                </div>
-                <div>
-                  <p className="text-xs font-bold text-gray-500 uppercase tracking-widest">Email Saya</p>
-                  <p className="text-lg font-semibold text-white">teguhguntoro28@gmail.com</p>
-                </div>
-              </a>
-              <div className="flex gap-4">
-                {[
-                  { icon: <Linkedin />, label: 'LinkedIn', href: 'http://linkedin.com/in/teguh-guntoro' },
-                  { icon: <Github />, label: 'GitHub', href: 'https://github.com/Agrisynx-Develop' },
-                ].map((social, i) => (
-                  <a key={i} href={social.href} className="flex-1 flex items-center justify-center gap-2 p-4 rounded-2xl bg-dark-surface border border-border-subtle hover:border-accent-cyan transition-all text-white group">
-                    <span className="group-hover:text-accent-cyan">{social.icon}</span>
-                    <span className="font-semibold">{social.label}</span>
-                  </a>
-                ))}
+        <div className="max-w-3xl mx-auto text-center">
+          <h3 className="text-2xl font-bold text-white mb-6">
+            Punya ide proyek menarik?
+          </h3>
+      
+          <p className="text-gray-400 mb-10 leading-relaxed">
+            Saya selalu terbuka untuk kolaborasi baru atau sekadar diskusi teknologi. 
+            Silakan hubungi saya melalui email atau platform berikut.
+          </p>
+      
+          <div className="space-y-6">
+            <a 
+              href="mailto:teguhguntoro28@gmail.com" 
+              className="flex items-center justify-center gap-4 p-4 rounded-2xl bg-dark-surface border border-border-subtle hover:border-accent-cyan transition-all group"
+            >
+              <div className="p-3 bg-accent-cyan/10 rounded-xl text-accent-cyan group-hover:bg-accent-cyan group-hover:text-dark-bg transition-all">
+                <Mail size={24} />
               </div>
+              <div>
+                <p className="text-xs font-bold text-gray-500 uppercase tracking-widest">
+                  Email Saya
+                </p>
+                <p className="text-lg font-semibold text-white">
+                  teguhguntoro28@gmail.com
+                </p>
+              </div>
+            </a>
+      
+            <div className="flex gap-4 justify-center">
+              {[
+                { icon: <Linkedin />, label: 'LinkedIn', href: 'http://linkedin.com/in/teguh-guntoro' },
+                { icon: <Github />, label: 'GitHub', href: 'https://github.com/Agrisynx-Develop' },
+              ].map((social, i) => (
+                <a
+                  key={i}
+                  href={social.href}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="flex items-center gap-2 px-6 py-3 rounded-2xl bg-dark-surface border border-border-subtle hover:border-accent-cyan transition-all text-white group"
+                >
+                  <span className="group-hover:text-accent-cyan">{social.icon}</span>
+                  <span className="font-semibold">{social.label}</span>
+                </a>
+              ))}
             </div>
           </div>
-        )}
+        </div>
       </Section>
 
       {/* --- FOOTER --- */}
