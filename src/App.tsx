@@ -189,7 +189,7 @@ export default function App() {
 
     const handleScroll = () => {
       // ScrollSpy
-      const sections = ['home', 'tentang', 'portofolio', 'pendidikan', 'pengalaman', 'kontak'];
+      const sections = ['home', 'about', 'portofolio', 'education', 'experience', 'contact'];
       const scrollPos = window.scrollY + 100;
       
       for (const section of sections) {
@@ -244,12 +244,12 @@ export default function App() {
   };
 
   const navLinks = [
-    { name: 'Beranda', id: 'home' },
-    { name: 'Tentang', id: 'tentang' },
+    { name: 'Dashnoard', id: 'home' },
+    { name: 'About', id: 'about' },
     { name: 'Portofolio', id: 'portofolio' },
-    { name: 'Pendidikan', id: 'pendidikan' },
-    { name: 'Pengalaman', id: 'pengalaman' },
-    { name: 'Kontak', id: 'kontak' },
+    { name: 'Education', id: 'education' },
+    { name: 'Experience', id: 'experience' },
+    { name: 'Contact', id: 'contact' },
   ];
 
   return (
@@ -383,9 +383,9 @@ export default function App() {
 
             <div className="grid grid-cols-2 gap-6 pt-6">
               {[
-                { label: 'Proyek Selesai', value: '2' },
+                { label: 'Proyek Selesai', value: '1' },
                 
-                { label: 'Jam Ngoding', value: '4k+' },
+                { label: 'Status', value: 'Currently Pursuing Graduate' },
               ].map((stat, i) => (
                 <div key={i} className="card-gradient p-6 rounded-2xl">
                   <h3 className="text-3xl font-bold text-accent-cyan mb-1">{stat.value}</h3>
