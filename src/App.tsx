@@ -628,7 +628,6 @@ export default function App() {
             </motion.div>
           </div>
         )}
-      </AnimatePresence>
 
       {/* --- BACK TO TOP --- */}
       <AnimatePresence>
