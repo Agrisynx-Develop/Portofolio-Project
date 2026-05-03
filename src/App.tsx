@@ -558,9 +558,6 @@ export default function App() {
       </Section>
 
       {/* --- FOOTER --- */}
-      <footer>
-
-      {/* --- FOOTER --- */}
       <footer className="border-t border-border-subtle py-12 px-6">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8">
           <div>
@@ -569,20 +566,22 @@ export default function App() {
           </div>
           <div className="flex gap-8">
             {navLinks.slice(0, 3).map(link => (
-              <a key={link.id} href={`#${link.id}`} className="text-sm font-medium text-gray-500 hover:text-white transition-colors">{link.name}</a>
+              <a key={link.id} href={`#${link.id}`} className="text-sm font-medium text-gray-500 hover:text-white transition-colors">
+                {link.name}
+              </a>
             ))}
           </div>
           <div className="flex gap-4">
-             <button className="p-2 text-gray-500 hover:text-accent-cyan transition-colors" title="Toggle Search">
-               <Search size={20} />
-             </button>
-             <button className="p-2 text-gray-500 hover:text-accent-cyan transition-colors" title="Toggle Theme">
-               <User size={20} />
-             </button>
+            <button className="p-2 text-gray-500 hover:text-accent-cyan transition-colors">
+              <Search size={20} />
+            </button>
+            <button className="p-2 text-gray-500 hover:text-accent-cyan transition-colors">
+              <User size={20} />
+            </button>
           </div>
         </div>
       </footer>
-
+      
       {/* --- MODAL PROJECT --- */}
       <AnimatePresence>
         {selectedProject && (
@@ -599,32 +598,18 @@ export default function App() {
               >
                 <X size={24} />
               </button>
-
+      
               <div className="overflow-y-auto">
                 <img src={selectedProject.image} alt={selectedProject.title} className="w-full aspect-video object-cover" />
                 <div className="p-8 md:p-12">
-                  <div className="flex flex-wrap items-center gap-4 mb-6">
-                    <span className="text-xs font-bold text-accent-cyan px-2 py-1 bg-accent-cyan/10 rounded uppercase tracking-widest">
-                      {selectedProject.category}
-                    </span>
-                    <div className="h-4 w-px bg-border-subtle" />
-                    <div className="flex gap-2">
-                       {selectedProject.tech.map((t: string) => (
-                         <span key={t} className="tech-badge">{t}</span>
-                       ))}
-                    </div>
-                  </div>
-
                   <h2 className="text-4xl font-bold text-white mb-6">{selectedProject.title}</h2>
-                  <p className="text-xl text-gray-400 leading-relaxed mb-10">
-                    {selectedProject.longDescription}
-                  </p>
-
-                  <div className="flex flex-col sm:flex-row gap-4 border-t border-border-subtle pt-8">
-                    <a href={selectedProject.demo} target="_blank" rel="noreferrer" className="btn-primary flex items-center justify-center gap-2">
+                  <p className="text-xl text-gray-400 mb-10">{selectedProject.longDescription}</p>
+      
+                  <div className="flex gap-4 border-t border-border-subtle pt-8">
+                    <a href={selectedProject.demo} target="_blank" rel="noreferrer" className="btn-primary flex items-center gap-2">
                       <ExternalLink size={18} /> Live Preview
                     </a>
-                    <a href={selectedProject.github} target="_blank" rel="noreferrer" className="btn-outline flex items-center justify-center gap-2">
+                    <a href={selectedProject.github} target="_blank" rel="noreferrer" className="btn-outline flex items-center gap-2">
                       <Github size={18} /> Source Code
                     </a>
                   </div>
@@ -633,7 +618,8 @@ export default function App() {
             </motion.div>
           </div>
         )}
-
+      </AnimatePresence>
+      
       {/* --- BACK TO TOP --- */}
       <AnimatePresence>
         {showBackToTop && (
@@ -642,12 +628,9 @@ export default function App() {
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0 }}
             onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-            className="fixed bottom-8 right-8 p-4 bg-accent-cyan text-dark-bg rounded-2xl shadow-xl shadow-accent-cyan/20 cursor-pointer z-40 hover:scale-110 active:scale-95 transition-transform"
+            className="fixed bottom-8 right-8 p-4 bg-accent-cyan text-dark-bg rounded-2xl shadow-xl"
           >
             <ArrowUp size={24} />
           </motion.button>
         )}
       </AnimatePresence>
-    </div>
-  );
-}
