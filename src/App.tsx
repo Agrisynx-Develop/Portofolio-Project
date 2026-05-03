@@ -621,6 +621,9 @@ export default function App() {
                     type="email"
                     placeholder="johndoe@email.com"
                     className="w-full px-4 py-3 bg-dark-bg border border-border-subtle rounded-xl text-white focus:outline-none focus:border-accent-cyan transition-all placeholder:text-gray-700"
+                    value={formData.email}
+                    onChange={(e) =>
+                      setFormData({ ...formData, email: e.target.value })
                   />
                 </div>
               </div>
