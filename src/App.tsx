@@ -220,6 +220,29 @@ export default function App() {
     });
   }, [filter, search]);
 
+  const handleContactSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!formData.email.includes('@')) {
+      alert('Pesan: Email tidak valid');
+      return;
+    }
+    
+    const newMessage = { ...formData, id: Date.now(), date: new Date().toLocaleDateString() };
+    const updatedMessages = [newMessage, ...messages];
+    setMessages(updatedMessages);
+    localStorage.setItem('portfolio_messages', JSON.stringify(updatedMessages));
+    
+    setFormStatus('success');
+    setFormData({ name: '', email: '', subject: '', message: '' });
+    setTimeout(() => setFormStatus(null), 3000);
+  };
+
+  const deleteMessage = (id: number) => {
+    const updated = messages.filter(m => m.id !== id);
+    setMessages(updated);
+    localStorage.setItem('portfolio_messages', JSON.stringify(updated));
+  };
+
   const navLinks = [
     { name: 'Beranda', id: 'home' },
     { name: 'Tentang', id: 'tentang' },
@@ -360,9 +383,9 @@ export default function App() {
 
             <div className="grid grid-cols-2 gap-6 pt-6">
               {[
-                { label: 'Proyek Selesai', value: '1' },
+                { label: 'Proyek Selesai', value: '2' },
                 
-                { label: 'Status', value: 'Curently Pursuing Graduate' },
+                { label: 'Jam Ngoding', value: '4k+' },
               ].map((stat, i) => (
                 <div key={i} className="card-gradient p-6 rounded-2xl">
                   <h3 className="text-3xl font-bold text-accent-cyan mb-1">{stat.value}</h3>
@@ -554,7 +577,99 @@ export default function App() {
               </div>
             </div>
           </div>
+
+          <div className="card-gradient p-8 rounded-3xl relative overflow-hidden">
+            <form onSubmit={handleContactSubmit} className="space-y-6 relative z-10">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                <div>
+                  <label className="block text-sm font-semibold text-gray-400 mb-2">Nama Lengkap</label>
+                  <input 
+                    required
+                    type="text" 
+                    value={formData.name}
+                    onChange={(e) => setFormData({...formData, name: e.target.value})}
+                    placeholder="Contoh: John Doe"
+                    className="w-full px-4 py-3 bg-dark-bg border border-border-subtle rounded-xl text-white focus:outline-none focus:border-accent-cyan transition-all placeholder:text-gray-700"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-semibold text-gray-400 mb-2">Email</label>
+                  <input 
+                    required
+                    type="email" 
+                    value={formData.email}
+                    onChange={(e) => setFormData({...formData, email: e.target.value})}
+                    placeholder="johndoe@email.com"
+                    className="w-full px-4 py-3 bg-dark-bg border border-border-subtle rounded-xl text-white focus:outline-none focus:border-accent-cyan transition-all placeholder:text-gray-700"
+                  />
+                </div>
+              </div>
+              <div>
+                <label className="block text-sm font-semibold text-gray-400 mb-2">Subjek</label>
+                <input 
+                  required
+                  type="text" 
+                  value={formData.subject}
+                  onChange={(e) => setFormData({...formData, subject: e.target.value})}
+                  placeholder="Butuh bantuan untuk..."
+                  className="w-full px-4 py-3 bg-dark-bg border border-border-subtle rounded-xl text-white focus:outline-none focus:border-accent-cyan transition-all placeholder:text-gray-700"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-semibold text-gray-400 mb-2">Pesan</label>
+                <textarea 
+                  required
+                  rows={4}
+                  value={formData.message}
+                  onChange={(e) => setFormData({...formData, message: e.target.value})}
+                  placeholder="Tuliskan pesan Anda di sini..."
+                  className="w-full px-4 py-3 bg-dark-bg border border-border-subtle rounded-xl text-white focus:outline-none focus:border-accent-cyan transition-all placeholder:text-gray-700 resize-none"
+                />
+              </div>
+              <button type="submit" className="btn-primary w-full flex items-center justify-center gap-2">
+                <Send size={18} /> Kirim Pesan Sekarang
+              </button>
+              
+              {formStatus === 'success' && (
+                <motion.p 
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="text-center text-accent-cyan font-semibold flex items-center justify-center gap-2"
+                >
+                  Pesan berhasil dikirim!
+                </motion.p>
+              )}
+            </form>
+          </div>
         </div>
+
+        {/* Message History Simulation */}
+        {messages.length > 0 && (
+          <div className="mt-20">
+            <h3 className="text-xl font-bold text-white mb-6 flex items-center gap-2">
+              Riwayat Pesan Anda <span className="text-xs bg-accent-cyan/10 text-accent-cyan px-2 py-0.5 rounded-full">{messages.length}</span>
+            </h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {messages.map((msg) => (
+                <div key={msg.id} className="card-gradient p-5 rounded-2xl relative group">
+                  <button 
+                    onClick={() => deleteMessage(msg.id)}
+                    className="absolute top-2 right-2 p-2 text-gray-600 hover:text-red-500 opacity-0 group-hover:opacity-100 transition-all cursor-pointer"
+                  >
+                    <Trash2 size={16} />
+                  </button>
+                  <p className="text-xs text-accent-cyan font-bold mb-1 uppercase tracking-widest">{msg.subject}</p>
+                  <p className="text-white text-sm font-semibold mb-2">{msg.name}</p>
+                  <p className="text-gray-500 text-xs mb-3 line-clamp-3">{msg.message}</p>
+                  <div className="flex items-center justify-between text-[10px] text-gray-700">
+                    <span>{msg.email}</span>
+                    <span>{msg.date}</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
       </Section>
 
       {/* --- FOOTER --- */}
@@ -566,22 +681,20 @@ export default function App() {
           </div>
           <div className="flex gap-8">
             {navLinks.slice(0, 3).map(link => (
-              <a key={link.id} href={`#${link.id}`} className="text-sm font-medium text-gray-500 hover:text-white transition-colors">
-                {link.name}
-              </a>
+              <a key={link.id} href={`#${link.id}`} className="text-sm font-medium text-gray-500 hover:text-white transition-colors">{link.name}</a>
             ))}
           </div>
           <div className="flex gap-4">
-            <button className="p-2 text-gray-500 hover:text-accent-cyan transition-colors">
-              <Search size={20} />
-            </button>
-            <button className="p-2 text-gray-500 hover:text-accent-cyan transition-colors">
-              <User size={20} />
-            </button>
+             <button className="p-2 text-gray-500 hover:text-accent-cyan transition-colors" title="Toggle Search">
+               <Search size={20} />
+             </button>
+             <button className="p-2 text-gray-500 hover:text-accent-cyan transition-colors" title="Toggle Theme">
+               <User size={20} />
+             </button>
           </div>
         </div>
       </footer>
-      
+
       {/* --- MODAL PROJECT --- */}
       <AnimatePresence>
         {selectedProject && (
@@ -598,18 +711,32 @@ export default function App() {
               >
                 <X size={24} />
               </button>
-      
+
               <div className="overflow-y-auto">
                 <img src={selectedProject.image} alt={selectedProject.title} className="w-full aspect-video object-cover" />
                 <div className="p-8 md:p-12">
+                  <div className="flex flex-wrap items-center gap-4 mb-6">
+                    <span className="text-xs font-bold text-accent-cyan px-2 py-1 bg-accent-cyan/10 rounded uppercase tracking-widest">
+                      {selectedProject.category}
+                    </span>
+                    <div className="h-4 w-px bg-border-subtle" />
+                    <div className="flex gap-2">
+                       {selectedProject.tech.map((t: string) => (
+                         <span key={t} className="tech-badge">{t}</span>
+                       ))}
+                    </div>
+                  </div>
+
                   <h2 className="text-4xl font-bold text-white mb-6">{selectedProject.title}</h2>
-                  <p className="text-xl text-gray-400 mb-10">{selectedProject.longDescription}</p>
-      
-                  <div className="flex gap-4 border-t border-border-subtle pt-8">
-                    <a href={selectedProject.demo} target="_blank" rel="noreferrer" className="btn-primary flex items-center gap-2">
+                  <p className="text-xl text-gray-400 leading-relaxed mb-10">
+                    {selectedProject.longDescription}
+                  </p>
+
+                  <div className="flex flex-col sm:flex-row gap-4 border-t border-border-subtle pt-8">
+                    <a href={selectedProject.demo} target="_blank" rel="noreferrer" className="btn-primary flex items-center justify-center gap-2">
                       <ExternalLink size={18} /> Live Preview
                     </a>
-                    <a href={selectedProject.github} target="_blank" rel="noreferrer" className="btn-outline flex items-center gap-2">
+                    <a href={selectedProject.github} target="_blank" rel="noreferrer" className="btn-outline flex items-center justify-center gap-2">
                       <Github size={18} /> Source Code
                     </a>
                   </div>
@@ -619,7 +746,7 @@ export default function App() {
           </div>
         )}
       </AnimatePresence>
-      
+
       {/* --- BACK TO TOP --- */}
       <AnimatePresence>
         {showBackToTop && (
@@ -628,9 +755,12 @@ export default function App() {
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0 }}
             onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-            className="fixed bottom-8 right-8 p-4 bg-accent-cyan text-dark-bg rounded-2xl shadow-xl"
+            className="fixed bottom-8 right-8 p-4 bg-accent-cyan text-dark-bg rounded-2xl shadow-xl shadow-accent-cyan/20 cursor-pointer z-40 hover:scale-110 active:scale-95 transition-transform"
           >
             <ArrowUp size={24} />
           </motion.button>
         )}
       </AnimatePresence>
+    </div>
+  );
+}
