@@ -220,27 +220,41 @@ export default function App() {
     });
   }, [filter, search]);
 
-  const handleContactSubmit = (e: React.FormEvent) => {
+  const handleContactSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (!formData.email.includes('@')) {
-      alert('Pesan: Email tidak valid');
+  
+    const form = e.currentTarget;
+    const formDataNetlify = new FormData(form);
+  
+    try {
+      await fetch("/", {
+        method: "POST",
+        body: formDataNetlify,
+      });
+    } catch (error) {
+      alert("Gagal kirim ke server");
       return;
     }
-    
-    const newMessage = { ...formData, id: Date.now(), date: new Date().toLocaleDateString() };
+
+    if (!formData.email.includes("@")) {
+      alert("Pesan: Email tidak valid");
+      return;
+    }
+  
+    const newMessage = {
+      ...formData,
+      id: Date.now(),
+      date: new Date().toLocaleDateString(),
+    };
+  
     const updatedMessages = [newMessage, ...messages];
     setMessages(updatedMessages);
-    localStorage.setItem('portfolio_messages', JSON.stringify(updatedMessages));
-    
-    setFormStatus('success');
-    setFormData({ name: '', email: '', subject: '', message: '' });
+    localStorage.setItem("portfolio_messages", JSON.stringify(updatedMessages));
+  
+    setFormStatus("success");
+    setFormData({ name: "", email: "", subject: "", message: "" });
+  
     setTimeout(() => setFormStatus(null), 3000);
-  };
-
-  const deleteMessage = (id: number) => {
-    const updated = messages.filter(m => m.id !== id);
-    setMessages(updated);
-    localStorage.setItem('portfolio_messages', JSON.stringify(updated));
   };
 
   const navLinks = [
@@ -579,11 +593,11 @@ export default function App() {
           </div>
 
           <div className="card-gradient p-8 rounded-3xl relative overflow-hidden">
-            <form 
+            <form
               name="contact"
               method="POST"
               data-netlify="true"
-              className="space-y-6 relative z-10"
+              onSubmit={handleContactSubmit}
             >
               <input type="hidden" name="form-name" value="contact" />
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
