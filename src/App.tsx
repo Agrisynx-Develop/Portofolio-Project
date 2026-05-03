@@ -383,9 +383,9 @@ export default function App() {
 
             <div className="grid grid-cols-2 gap-6 pt-6">
               {[
-                { label: 'Proyek Selesai', value: '2' },
+                { label: 'Proyek Selesai', value: '1' },
                 
-                { label: 'Jam Ngoding', value: '4k+' },
+                { label: 'Status', value: 'Curently Pursuing Graduate' },
               ].map((stat, i) => (
                 <div key={i} className="card-gradient p-6 rounded-2xl">
                   <h3 className="text-3xl font-bold text-accent-cyan mb-1">{stat.value}</h3>
